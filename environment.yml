@@ -14,4 +14,4 @@ dependencies:
   - jupyterlab
   - fastapi
   - uvicorn
-  - ydata-profiling
+  - ydata-profiling=4.0.0
