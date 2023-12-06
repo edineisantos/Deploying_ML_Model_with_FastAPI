@@ -17,13 +17,22 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
+    # Create and train the model
+    model = LogisticRegression()
+    model.fit(X_train, y_train)
 
-    pass
+    # Save the model
+    joblib.dump(model, 'model/trained_model.joblib')
+    print("Model trained and saved at 'model/trained_model.joblib'")
+
+    # Return the trained model
+    return model
 
 
 def compute_model_metrics(y, preds):
     """
-    Validates the trained machine learning model using precision, recall, and F1.
+    Validates the trained machine learning model using precision, recall,
+    and F1.
 
     Inputs
     ------
@@ -57,4 +66,4 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    pass
+    preds = model.predict(X)
