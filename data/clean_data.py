@@ -11,8 +11,8 @@ Author: Edinei Santos
 Date: 2023-12-05
 """
 
-import pandas as pd
 import os
+import pandas as pd
 
 def clean_data(file_path):
     """
@@ -49,6 +49,13 @@ def clean_data(file_path):
     return cleaned_file_path
 
 def main():
+    """
+    Main function to clean the census data and save it as 'cleaned_census.csv'.
+
+    This function defines the file path for the original census data, invokes the cleaning
+    process, and saves the cleaned data to a new file. It also prints a message upon
+    successful completion.
+    """
     # The file name of the CSV to be cleaned
     file_name = 'census.csv'
     data_folder = 'data'
