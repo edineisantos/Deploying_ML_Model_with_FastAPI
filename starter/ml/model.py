@@ -1,3 +1,5 @@
+import os
+import joblib
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 
 
@@ -21,10 +23,15 @@ def train_model(X_train, y_train):
     model = LogisticRegression()
     model.fit(X_train, y_train)
 
-    # Save the model
-    joblib.dump(model, 'model/trained_model.joblib')
-    print("Model trained and saved at 'model/trained_model.joblib'")
+    # Define the path for saving the model
+    model_directory = os.path.join(os.path.dirname(__file__), '..', 'model')
+    os.makedirs(model_directory, exist_ok=True)
+    model_path = os.path.join(model_directory, 'trained_model.joblib')
 
+    # Save the model
+    joblib.dump(model, model_path)
+    print(f"Model trained and saved at '{model_path}'")
+    
     # Return the trained model
     return model
 
