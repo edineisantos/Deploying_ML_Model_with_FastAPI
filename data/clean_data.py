@@ -1,9 +1,9 @@
 """
 Census Data Cleaner
 
-This script cleans census data by removing extra spaces and duplicates, then saves
-the cleaned data as 'cleaned_census.csv' in the same directory. It is designed 
-to follow PEP8 standards and can be run from the command line.
+This script cleans census data by removing extra spaces and duplicates, then
+saves the cleaned data as 'cleaned_census.csv' in the same directory. It is
+designed to follow PEP8 standards and can be run from the command line.
 
 Dataset: Census data in CSV format.
 
@@ -14,11 +14,13 @@ Date: 2023-12-05
 import os
 import pandas as pd
 
+
 def clean_data(file_path):
     """
-    Clean a CSV file by stripping extra spaces from column names and string values,
-    then save the cleaned data as 'cleaned_census.csv' in the same directory.
-    
+    Clean a CSV file by stripping extra spaces from column names and string
+    values,  then save the cleaned data as 'cleaned_census.csv' in the
+    same directory.
+
     Parameters:
     file_path (str): The path to the CSV file to be cleaned.
 
@@ -43,18 +45,21 @@ def clean_data(file_path):
     df = df.drop_duplicates()
 
     # Save the cleaned data as 'cleaned_census.csv'
-    cleaned_file_path = os.path.join(os.path.dirname(file_path), 'cleaned_census.csv')
+    cleaned_file_path = os.path.join(
+        os.path.dirname(file_path),
+        'cleaned_census.csv')
     df.to_csv(cleaned_file_path, index=False)
 
     return cleaned_file_path
+
 
 def main():
     """
     Main function to clean the census data and save it as 'cleaned_census.csv'.
 
-    This function defines the file path for the original census data, invokes the cleaning
-    process, and saves the cleaned data to a new file. It also prints a message upon
-    successful completion.
+    This function defines the file path for the original census data, invokes
+    the cleaningprocess, and saves the cleaned data to a new file. It also
+    prints a message upon successful completion.
     """
     # The file name of the CSV to be cleaned
     file_name = 'census.csv'
@@ -65,7 +70,10 @@ def main():
     cleaned_file_path = clean_data(file_path)
 
     # Print completion message
-    print(f"Data cleaning process completed. Cleaned file saved as: {cleaned_file_path}")
+    print(
+        f"Data cleaning process completed. \
+            Cleaned file saved as: {cleaned_file_path}")
+
 
 if __name__ == "__main__":
     main()
