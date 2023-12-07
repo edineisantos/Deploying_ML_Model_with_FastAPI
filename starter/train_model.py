@@ -1,9 +1,10 @@
 # Script to train machine learning model.
 
-import pandas as pd
-from sklearn.model_selection import train_test_split
 import sys
 import os
+import joblib
+import pandas as pd
+from sklearn.model_selection import train_test_split
 
 # Adjust the path for importing from ml subfolder
 sys.path.insert(0, os.path.abspath(os.path.join(os.getcwd(), 'ml')))
@@ -54,6 +55,19 @@ def main():
     X_train, y_train, encoder, lb = process_data(
         train, categorical_features=cat_features, label="salary", training=True
     )
+
+    # Define the path for saving the model, encoder, and label binarizer
+    # Assuming the script is executed from the 'starter' directory
+    model_directory = os.path.abspath(os.path.join(os.getcwd(), '..', 'model'))
+    os.makedirs(model_directory, exist_ok=True)
+
+    # Paths for the encoder and label binarizer
+    encoder_path = os.path.join(model_directory, 'encoder.joblib')
+    lb_path = os.path.join(model_directory, 'label_binarizer.joblib')
+
+    # Save the model, encoder, and label binarizer
+    joblib.dump(encoder, encoder_path)
+    joblib.dump(lb, lb_path)
 
     # Train and save the model
     model = train_model(X_train, y_train)
