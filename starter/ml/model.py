@@ -4,8 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 
 
-# Optional: implement hyperparameter tuning.
-def train_model(X_train, y_train):
+def train_model(X_train, y_train, model_name="trained_model"):
     """
     Trains a machine learning model and returns it.
 
@@ -15,6 +14,10 @@ def train_model(X_train, y_train):
         Training data.
     y_train : np.array
         Labels.
+    model_name : str
+        The name of the file in which to save the model.
+        Defaults to "trained_model".
+
     Returns
     -------
     model
@@ -28,7 +31,7 @@ def train_model(X_train, y_train):
     # Assuming the script is executed from the 'starter' directory
     model_directory = os.path.abspath(os.path.join(os.getcwd(), '..', 'model'))
     os.makedirs(model_directory, exist_ok=True)
-    model_path = os.path.join(model_directory, 'trained_model.joblib')
+    model_path = os.path.join(model_directory, f"{model_name}.joblib")
 
     # Save the model
     joblib.dump(model, model_path)
@@ -36,7 +39,6 @@ def train_model(X_train, y_train):
 
     # Return the trained model
     return model
-
 
 def compute_model_metrics(y, preds):
     """
