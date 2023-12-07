@@ -1,5 +1,6 @@
 import os
 import joblib
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 
 
@@ -23,15 +24,16 @@ def train_model(X_train, y_train):
     model = LogisticRegression()
     model.fit(X_train, y_train)
 
-    # Define the path for saving the model
-    model_directory = os.path.join(os.path.dirname(__file__), '..', 'model')
+     # Define the path for saving the model
+    # Assuming the script is executed from the 'starter' directory
+    model_directory = os.path.abspath(os.path.join(os.getcwd(), '..', 'model'))
     os.makedirs(model_directory, exist_ok=True)
     model_path = os.path.join(model_directory, 'trained_model.joblib')
 
     # Save the model
     joblib.dump(model, model_path)
     print(f"Model trained and saved at '{model_path}'")
-    
+
     # Return the trained model
     return model
 
