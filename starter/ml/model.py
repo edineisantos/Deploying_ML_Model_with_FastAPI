@@ -24,7 +24,7 @@ def train_model(X_train, y_train):
     model = LogisticRegression()
     model.fit(X_train, y_train)
 
-     # Define the path for saving the model
+    # Define the path for saving the model
     # Assuming the script is executed from the 'starter' directory
     model_directory = os.path.abspath(os.path.join(os.getcwd(), '..', 'model'))
     os.makedirs(model_directory, exist_ok=True)
@@ -66,7 +66,7 @@ def inference(model, X):
 
     Inputs
     ------
-    model : ???
+    model : LogisticRegression
         Trained machine learning model.
     X : np.array
         Data used for prediction.
