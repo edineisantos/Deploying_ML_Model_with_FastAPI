@@ -4,11 +4,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import joblib
 
-# Adjust the path for importing from ml subfolder
-sys.path.insert(0, os.path.abspath(os.path.join(os.getcwd(), 'ml')))
-
-from data import process_data
-from model import compute_model_metrics, inference
+from starter.ml.data import process_data
+from starter.ml.model import compute_model_metrics, inference
 
 def compute_metrics_by_category(X, y, model, feature_name, encoder, lb, 
 cat_features, file):

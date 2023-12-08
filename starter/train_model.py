@@ -6,11 +6,9 @@ import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-# Adjust the path for importing from ml subfolder
-sys.path.insert(0, os.path.abspath(os.path.join(os.getcwd(), 'ml')))
-
-from data import process_data
-from model import train_model
+from starter.ml.data import process_data
+from starter.ml.model import train_model
+print("Import modules success.")
 
 def load_data(file_path):
     """

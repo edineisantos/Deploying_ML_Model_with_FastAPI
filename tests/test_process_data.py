@@ -4,12 +4,8 @@ import pytest
 import pandas as pd
 import numpy as np
 
-# Adjusting the path for 'data.py' import
-ml_dir = os.path.join(os.path.dirname(__file__), '..', 'starter', 'ml')
-sys.path.insert(0, os.path.abspath(ml_dir))
-
-from data import process_data
-
+from starter.ml.data import process_data
+print("Imported process_data successfully")
 
 def test_process_data():
     # Create a sample DataFrame
