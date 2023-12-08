@@ -78,3 +78,4 @@ def inference(model, X):
         Predictions from the model.
     """
     preds = model.predict(X)
+    return preds
