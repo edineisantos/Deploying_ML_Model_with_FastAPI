@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from starter.ml.data import process_data
-from starter.ml.model import train_model
+from starter.ml.model import train_model, compute_model_metrics, inference
 print("Import modules success.")
 
 def load_data(file_path):
@@ -70,6 +70,31 @@ def main():
     # Train and save the model
     model = train_model(X_train, y_train)
     print("Model training complete.")
+
+    # Process the test data
+    X_test, y_test, _, _ = process_data(
+        test, categorical_features=cat_features, label="salary", training=False,
+        encoder=encoder, lb=lb
+    )
+
+    # Make predictions on the test data
+    preds = inference(model, X_test)
+
+    # Compute metrics
+    precision, recall, fbeta = compute_model_metrics(y_test, preds)
+
+    # Output path for the metrics
+    metrics_output_path = os.path.join(model_directory, 'metrics_output.txt')
+
+    # Write the metrics to the file
+    with open(metrics_output_path, 'w') as file:
+        print(f" === Metrics for trained model === ", file=file)
+        file.write(f"Precision: {precision}\n")
+        file.write(f"Recall: {recall}\n")
+        file.write(f"F1-Score: {fbeta}\n")
+
+    print("Model metrics saved to 'metrics_output.txt'.")
+
 
 if __name__ == "__main__":
     main()

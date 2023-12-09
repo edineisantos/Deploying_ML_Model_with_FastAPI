@@ -1,0 +1,4 @@
+ === Metrics for trained model === 
+Precision: 0.7142857142857143
+Recall: 0.25109855618330196
+F1-Score: 0.3715745471435207
