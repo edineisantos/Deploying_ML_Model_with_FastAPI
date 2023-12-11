@@ -4,6 +4,13 @@ from main import app
 client = TestClient(app)
 
 
+def test_get_method():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"greeting":
+                               "Welcome to the Census Income Prediction API!"}
+
+
 def test_post_lower_age_education():
     test_data = {
         "age": 20,
