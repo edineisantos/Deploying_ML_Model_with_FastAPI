@@ -1,6 +1,4 @@
 # Script to train machine learning model.
-
-import sys
 import os
 import joblib
 import pandas as pd
@@ -8,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 from starter.ml.data import process_data
 from starter.ml.model import train_model, compute_model_metrics, inference
-print("Import modules success.")
+
 
 def load_data(file_path):
     """
@@ -27,10 +25,11 @@ def load_data(file_path):
     data = pd.read_csv(file_path)
     return data
 
+
 def main():
     # Path to the cleaned census data file
     data_file = os.path.join(os.getcwd(), '..', 'data', 'cleaned_census.csv')
-    
+
     # Load the data
     data = load_data(data_file)
 
@@ -73,8 +72,8 @@ def main():
 
     # Process the test data
     X_test, y_test, _, _ = process_data(
-        test, categorical_features=cat_features, label="salary", training=False,
-        encoder=encoder, lb=lb
+        test, categorical_features=cat_features, label="salary",
+        training=False, encoder=encoder, lb=lb
     )
 
     # Make predictions on the test data
@@ -88,10 +87,10 @@ def main():
 
     # Write the metrics to the file
     with open(metrics_output_path, 'w') as file:
-        print(f" === Metrics for trained model === ", file=file)
-        file.write(f"Precision: {precision}\n")
-        file.write(f"Recall: {recall}\n")
-        file.write(f"F1-Score: {fbeta}\n")
+        print(" === Metrics for trained model === ", file=file)
+        file.write("Precision: {precision}\n")
+        file.write("Recall: {recall}\n")
+        file.write("F1-Score: {fbeta}\n")
 
     print("Model metrics saved to 'metrics_output.txt'.")
 

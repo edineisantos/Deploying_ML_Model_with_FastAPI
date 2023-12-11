@@ -40,6 +40,7 @@ def train_model(X_train, y_train, model_name="trained_model"):
     # Return the trained model
     return model
 
+
 def compute_model_metrics(y, preds):
     """
     Validates the trained machine learning model using precision, recall,

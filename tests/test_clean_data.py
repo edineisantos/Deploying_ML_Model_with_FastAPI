@@ -1,13 +1,9 @@
 import os
 import pandas as pd
 import pytest
-import sys
 
-# Adjusting the path for 'clean_data' import
-starter_dir = os.path.join(os.path.dirname(__file__), '..', 'starter')
-sys.path.insert(0, os.path.abspath(starter_dir))
+from starter.clean_data import clean_data
 
-from clean_data import clean_data
 
 def test_file_not_found():
     """
@@ -15,6 +11,7 @@ def test_file_not_found():
     """
     with pytest.raises(FileNotFoundError):
         clean_data("non_existent_file.csv")
+
 
 def test_clean_data_output():
     """

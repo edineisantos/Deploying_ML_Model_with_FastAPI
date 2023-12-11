@@ -1,8 +1,8 @@
 from fastapi.testclient import TestClient
 from main import app
-import pytest
 
 client = TestClient(app)
+
 
 def test_post_lower_age_education():
     test_data = {
@@ -25,6 +25,7 @@ def test_post_lower_age_education():
     response = client.post("/predict", json=test_data)
     assert response.status_code == 200
     assert response.json() == {"prediction": "<=50K"}
+
 
 def test_post_higher_age_education_gain():
     test_data = {

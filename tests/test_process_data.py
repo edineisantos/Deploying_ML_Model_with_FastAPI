@@ -1,11 +1,7 @@
-import os
-import sys
-import pytest
 import pandas as pd
-import numpy as np
 
 from starter.ml.data import process_data
-print("Imported process_data successfully")
+
 
 def test_process_data():
     # Create a sample DataFrame
@@ -20,8 +16,8 @@ def test_process_data():
 
     # Process the data
     X, y, encoder, lb = process_data(
-        data, categorical_features=categorical_features, label=label, training=True
-    )
+        data, categorical_features=categorical_features, label=label,
+        training=True)
 
     # Check the shape of the output arrays
     # Same number of rows
