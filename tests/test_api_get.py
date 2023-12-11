@@ -1,11 +1,12 @@
-import pytest
-from httpx import AsyncClient
+from fastapi.testclient import TestClient
 from main import app
+import pytest
 
-@pytest.mark.asyncio
-async def test_get_method():
-    async with AsyncClient(app=app, base_url="http://127.0.0.1:8890") as ac:
-        response = await ac.get("/")
+client = TestClient(app)
+
+def test_get_method():
+    response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"greeting": 
     "Welcome to the Census Income Prediction API!"}
+
