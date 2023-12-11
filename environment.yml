@@ -16,5 +16,3 @@ dependencies:
   - uvicorn
   - ydata-profiling=4.0.0
   - dvc
-  - httpx
-  - pytest-asyncio
