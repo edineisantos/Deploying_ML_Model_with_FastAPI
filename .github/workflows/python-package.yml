@@ -39,3 +39,17 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ml-fast-api-deploy
+      - name: Deploy to App Engine
+        run: |
+          gcloud app deploy app.yaml --quiet
