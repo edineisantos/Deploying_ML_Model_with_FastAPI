@@ -1,75 +1,98 @@
-Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
+# Deploying ML Model with FastAPI 
 
-# Environment Set up
-* Download and install conda if you don’t have it already.
-    * Use the supplied requirements file to create a new environment, or
-    * conda create -n [envname] "python=3.8" scikit-learn dvc pandas numpy pytest jupyter jupyterlab fastapi uvicorn -c conda-forge
-    * Install git either through conda (“conda install git”) or through your CLI, e.g. sudo apt-get git.
+## Project Overview
 
-## Repositories
+The Deploying ML Model with FastAPI is a RESTful service developed as part of the ML DevOps Engineer Nanodegree at Udacity. This project utilizes a machine learning model to predict income levels based on census data. The API, built with FastAPI, serves as an interface for model inference, allowing users to submit demographic data and receive income predictions.This project is intended for educational purposes and is not recommended for production use. It serves as a demonstration of integrating machine learning models with web APIs and deploying them in a cloud environment.
 
-* Create a directory for the project and initialize Git and DVC.
-   * As you work on the code, continually commit changes. Trained models you want to keep must be committed to DVC.
-* Connect your local Git repository to GitHub.
+## Objectives
 
-## Set up S3
+The key goals of this project include:
 
-* In your CLI environment install the<a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html" target="_blank"> AWS CLI tool</a>.
-* In the navigation bar in the Udacity classroom select **Open AWS Gateway** and then click **Open AWS Console**. You will not need the AWS Access Key ID or Secret Access Key provided here.
-* From the Services drop down select S3 and then click Create bucket.
-* Give your bucket a name, the rest of the options can remain at their default.
+- Developing a RESTful API using FastAPI for model inference.
+- Adhering to best practices in Python programming and API development.
+- Implementing comprehensive testing for both the machine learning model and the API.
+- Demonstrating continuous integration and continuous deployment (CI/CD) with GitHub Actions and Google Cloud Platform (GCP).
+- Showcasing skills in handling and deploying machine learning models in a production environment.
 
-To use your new S3 bucket from the AWS CLI you will need to create an IAM user with the appropriate permissions. The full instructions can be found <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console" target="_blank">here</a>, what follows is a paraphrasing:
+## File Structure Overview
 
-* Sign in to the IAM console <a href="https://console.aws.amazon.com/iam/" target="_blank">here</a> or from the Services drop down on the upper navigation bar.
-* In the left navigation bar select **Users**, then choose **Add user**.
-* Give the user a name and select **Programmatic access**.
-* In the permissions selector, search for S3 and give it **AmazonS3FullAccess**
-* Tags are optional and can be skipped.
-* After reviewing your choices, click create user. 
-* Configure your AWS CLI to use the Access key ID and Secret Access key.
+The project is structured as follows:
 
-## GitHub Actions
+- `main.py`: The FastAPI application code.
+- `requirements.txt`: Lists the dependencies required to run the project.
+- `app.yaml`: Configuration file for deploying the application on GCP's App Engine.
+- `Dockerfile`: Instructions for building a Docker image of the project.
+- `tests/`: Contains test scripts for the API.
+- `starter/`: A Python package with utility functions for data processing and model inference.
+- `model/`: Directory containing the trained model, encoder, and label binarizer.
+- `data/`: Contains the dataset used in the project, providing census information for model training and testing.
+- `screenshots/`: Includes images showcasing the application running in production and the successful execution of the CI/CD pipeline on GitHub Actions.
+- `model_card.md`: A detailed document explaining the data used, model performance, ethical considerations, and limitations.
+- `api_post_request.py`: A script for sending POST requests to the deployed API to test model predictions in a production environment.
+- `environment.yml`: A Conda environment file for setting up a development environment with all required dependencies.
 
-* Setup GitHub Actions on your repository. You can use one of the pre-made GitHub Actions if at a minimum it runs pytest and flake8 on push and requires both to pass without error.
-   * Make sure you set up the GitHub Action to have the same version of Python as you used in development.
-* Add your <a href="https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions" target="_blank">AWS credentials to the Action</a>.
-* Set up <a href="https://github.com/iterative/setup-dvc" target="_blank">DVC in the action</a> and specify a command to `dvc pull`.
 
-## Data
+## Running the Project
 
-* Download census.csv from the data folder in the starter repository.
-   * Information on the dataset can be found <a href="https://archive.ics.uci.edu/ml/datasets/census+income" target="_blank">here</a>.
-* Create a remote DVC remote pointing to your S3 bucket and commit the data.
-* This data is messy, try to open it in pandas and see what you get.
-* To clean it, use your favorite text editor to remove all spaces.
-* Commit this modified data to DVC under a new name (we often want to keep the raw data untouched but then can keep updating the cooked version).
+### Local Setup
 
-## Model
+1. Clone the repository to your local machine.
+2. Navigate to the project directory and install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run the FastAPI application locally:
+   ```bash
+   uvicorn main:app --reload
+   ```
 
-* Using the starter code, write a machine learning model that trains on the clean data and saves the model. Complete any function that has been started.
-* Write unit tests for at least 3 functions in the model code.
-* Write a function that outputs the performance of the model on slices of the data.
-   * Suggestion: for simplicity, the function can just output the performance on slices of just the categorical features.
-* Write a model card using the provided template.
+### Using Docker
 
-## API Creation
+To run the "Deploying ML Model with FastAPI" project using Docker, follow these steps:
 
-* Create a RESTful API using FastAPI this must implement:
-   * GET on the root giving a welcome message.
-   * POST that does model inference.
-   * Type hinting must be used.
-   * Use a Pydantic model to ingest the body from POST. This model should contain an example.
-    * Hint: the data has names with hyphens and Python does not allow those as variable names. Do not modify the column names in the csv and instead use the functionality of FastAPI/Pydantic/etc to deal with this.
-* Write 3 unit tests to test the API (one for the GET and two for POST, one that tests each prediction).
+1. Build the Docker image:
+   ```bash
+   docker build -t ml_model_fast_api_image .
+   ```
 
-## API Deployment
+2. Run the Docker container, ensuring the correct port is exposed. The default port in the Dockerfile is set to 8890, but you can modify it as needed:
+   ```bash
+   docker run -p 8890:8890 --name ml_model_fast_api ml_model_fast_api_image
+   ```
 
-* Create a free Heroku account (for the next steps you can either use the web GUI or download the Heroku CLI).
-* Create a new app and have it deployed from your GitHub repository.
-   * Enable automatic deployments that only deploy if your continuous integration passes.
-   * Hint: think about how paths will differ in your local environment vs. on Heroku.
-   * Hint: development in Python is fast! But how fast you can iterate slows down if you rely on your CI/CD to fail before fixing an issue. I like to run flake8 locally before I commit changes.
-* Set up DVC on Heroku using the instructions contained in the starter directory.
-* Set up access to AWS on Heroku, if using the CLI: `heroku config:set AWS_ACCESS_KEY_ID=xxx AWS_SECRET_ACCESS_KEY=yyy`
-* Write a script that uses the requests module to do one POST on your live API.
+3. Inside the Docker container, start the FastAPI application with the following command. This command uses Uvicorn to serve the app on the specified host and port. The `--reload` flag is optional and enables auto-reloading of the server on code changes:
+   ```bash
+   uvicorn main:app --reload --host 0.0.0.0 --port 8890
+   ```
+
+This setup allows you to run the FastAPI application in a Dockerized environment, ensuring consistency across different machines and ease of deployment. Remember to adjust the port numbers in both the Docker run command and the Uvicorn command if you change the exposed port in the Dockerfile.
+
+### API Endpoints
+
+- `GET /`: Returns a welcome message.
+- `POST /predict`: Accepts JSON data for making income predictions.
+
+### Example JSON for POST /predict
+
+```json
+{
+    "age": 39,
+    "workclass": "State-gov",
+    "fnlgt": 77516,
+    "education": "Bachelors",
+    "education-num": 13,
+    "marital-status": "Never-married",
+    "occupation": "Adm-clerical",
+    "relationship": "Not-in-family",
+    "race": "White",
+    "sex": "Male",
+    "capital-gain": 2174,
+    "capital-loss": 0,
+    "hours-per-week": 40,
+    "native-country": "United-States"
+}
+```
+
+## Continuous Deployment
+
+The project employs GitHub Actions for CI/CD, automatically deploying the application to Google Cloud's App Engine upon successful merging of changes into the master branch.
