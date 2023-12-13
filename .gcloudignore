@@ -1,0 +1,21 @@
+# Ignore specific folders
+/__pycache__/
+/.dvc/
+/.empty/
+/.github/
+/.pytest_cache/
+/build/
+/data/
+/Notebooks/
+/screenshots/
+/starter.egg-info/
+
+# Ignore specific files
+/.dvcignore
+/.gitignore
+/Dockerfile
+/environment.yml
+/model_card.md
+/README.md
+/sanitycheck.py
+
